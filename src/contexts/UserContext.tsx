@@ -155,7 +155,6 @@ export function UserProvider({children}:iProviderProps){
         const response = await api.get<iProducts[]>('/products', {headers:{
           Authorization: `Bearer ${JSON.parse(token)}`
         }})
-        console.log(response.data)
         setProducts(response.data)
         navigate('/home')
         } catch (error) {
