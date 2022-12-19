@@ -1,13 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-interface iProviderProps{
+export interface iProviderProps{
   children: React.ReactNode
 }
 
 export interface iUserLogin{
-  name:string;
+  email:string;
   password: string;
 }
 
@@ -15,10 +18,10 @@ export interface iUserRegister{
   name: string;
   email:string;
   password: string;
-  confirmPassword: string
+  confirmPassword?: string
 }
 
-interface iProducts{
+export interface iProducts{
   id:number;
   name: string;
   category: string;
@@ -26,35 +29,72 @@ interface iProducts{
   img: string;
 }
 
+interface iRegisterResponse{
+  accessToken: string;
+  user:{
+    id: string;
+    name: string;
+    email: string;
+  }
+}
+
+export interface iRequestError {
+  error: string;
+}
+
 interface iUserProviderData{
   userLogin: (formData:iUserLogin) => void;
   userRegister: (formData:iUserRegister) => void;
+  userLogout: () => void;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean;
+  products: iProducts[];
 }
 
 export const UserContext = createContext({} as iUserProviderData)
 
 export function UserProvider({children}:iProviderProps){
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [products, setProducts] = useState([] as iProducts[]);
 
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const [products, setProducts] = useState([] as iProducts[]);
-  const [filteredProducts, setFilteredProducts] = useState([] as iProducts[]);
-  const [currentSale, setCurrentSale] = useState([])
-  const [cartTotal, setCartTotal] = useState([])
-  const [searchText, setSearchText] = useState('')
 
   async function userLogin(formData:iUserLogin) {
     try {
       setLoading(true)
       const response = await api.post('/login',formData)
-      setUser(response.data.user)
-      localStorage.setItem('@TOKEN', JSON.stringify(response.data.token))
+
+      localStorage.setItem('@TOKEN', JSON.stringify(response.data.accessToken))
       localStorage.setItem('@USERID', JSON.stringify(response.data.user.id))
+
+      toast.success('Login realizado com sucesso!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+      
+      setTimeout(() => {
+        navigate('/home')
+        
+      }, 6000);
+
     } catch (error) {
       console.log(error)
+      toast.error('Algo deu errado!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     } finally{
       setLoading(false)
     }
@@ -63,33 +103,63 @@ export function UserProvider({children}:iProviderProps){
   async function userRegister(formData:iUserRegister) {
     try {
       setLoading(true)
-      const response = await api.post('/users',formData)
-      console.log(response)
+
+      await api.post<iRegisterResponse>('/users',formData)
+
+      toast.success('Cadastro realizado com sucesso!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+      setTimeout(() => {
+        navigate('/')
+      }, 6000);
     } catch (error) {
-      console.log(error)
+        toast.error('Verifique que o email já foi cadastrado', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+
     } finally{
       setLoading(false)
     }
   }
 
+  function userLogout() {
+    localStorage.clear()
+    navigate('/')
+  }
+
   useEffect(()=>{
     async function userLoad() {
       const token = localStorage.getItem('@TOKEN')
-
-  
+ 
       if(!token) {
         setLoading(false)
+        navigate('/')
         return
         }
   
       try {
-        const {data} = await api.get<iProducts[]>('/products', {headers:{
+        const response = await api.get<iProducts[]>('/products', {headers:{
           Authorization: `Bearer ${JSON.parse(token)}`
         }})
-              
-        setProducts(data)
+        console.log(response.data)
+        setProducts(response.data)
+        navigate('/home')
         } catch (error) {
-          console.error(error)
+          console.log(error)
         }finally {
           setLoading(false)
           }
@@ -98,10 +168,10 @@ export function UserProvider({children}:iProviderProps){
 
     
   },[])
-  
+
 
   return(
-  <UserContext.Provider value={{userLogin,userRegister}}>
+  <UserContext.Provider value={{products,userLogin,userRegister,userLogout, setLoading, loading}}>
     {children}
   </UserContext.Provider>
   )

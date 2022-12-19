@@ -5,7 +5,7 @@ export const registerSchema = yup.object().shape({
 
   email: yup.string().required('Endereço de e-mail é obrigatório').email('É necessário fornecer um e-mail válido'),
 
-  password: yup.string().required('Senha obrigatória').matches(/(?=.*?[A-Z])/, 'Necessário uma letra maiúscula').matches(/(?=.*?[a-z])/, 'Necessário uma letra minúscula').matches(/(?=.*?[0-9])/,'Necessário um número').matches(/(?=.*?[#?!@$%^&*-])/,'Necessário um caractere especial').min(8,'É necessário uma senha de pelo menos oito caracteres'),
+  password: yup.string().required('Senha obrigatória').min(6,'É necessário uma senha de pelo menos seis caracteres'),
 
   confirmPassword: yup.string().required('Confirme sua senha').oneOf([yup.ref('password')],'A senha informada não coincide'),
 

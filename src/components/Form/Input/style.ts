@@ -1,21 +1,24 @@
 import styled from "styled-components";
 
 export const StyledInput = styled.fieldset`
-  
+  width: 100%;
   border: none;
-  transition: 1s ease;
+  transition: 0.2s ease;
   
   legend{
-    transition: 1s ease;
+    transition: 0.2s ease;
     display: none;
+    color: var(--color-gray-300);
   }
 
-  &:hover{
-    border: 1px solid black;
+  &:hover,
+  &:focus{
+    border: 2px solid black;
     border-radius: 8px;
   }
 
-  &:hover legend{
+  &:hover legend,
+  &:focus legend{
     
     display: unset;
     margin-left: 15px;
@@ -29,9 +32,11 @@ export const StyledInput = styled.fieldset`
     padding: 20.5px 15px;
     transition: 1s ease;
     outline: none;
+    width: 100%;
   }
 
-  &:hover input{
+  &:hover input,
+  &:focus input{
     background-color: transparent;
     padding: 8.5px 15px 12.5px 15px;
   }
