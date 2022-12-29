@@ -5,7 +5,7 @@ export const StyledProductList = styled.main`
 
   p {
     padding-top: 30px;
-    color: var(--color-gray-100);
+    color: var(--color-gray-300);
     padding-bottom: 26px;
   }
 

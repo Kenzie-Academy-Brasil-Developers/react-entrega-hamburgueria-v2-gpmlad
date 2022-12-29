@@ -11,6 +11,7 @@ export const StyledHeader = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
   }
 
   div:nth-child(2){
@@ -21,10 +22,23 @@ export const StyledHeader = styled.header`
   button{
     border: none;
     background-color: transparent;
+    position: relative;
   }
 
   input{
     margin-top: 8px;
+  }
+
+  div img ~ div {
+    background-color: var(--color-primary);
+    padding: 5px 5px;
+    border: none;
+    border-radius: 7px;
+    position: absolute;
+    top: -14px;
+    right: -11px;
+    color: white;
+    font-weight: var(--font-weight-bold);
   }
 `
 

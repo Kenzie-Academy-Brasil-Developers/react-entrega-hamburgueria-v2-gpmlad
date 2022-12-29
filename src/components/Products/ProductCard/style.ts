@@ -11,8 +11,8 @@ export const StyledProduct = styled.li`
   gap: 16px;
 
   &:hover{
-    border: 2px solid var(--color-gray-600);
-    transition: 0.4s;
+    border: 2px solid var(--color-primary);
+    transition: 0.2s;
   }
 
   .image {
