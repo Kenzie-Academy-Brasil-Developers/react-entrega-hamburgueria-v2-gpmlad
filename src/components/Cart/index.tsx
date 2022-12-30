@@ -7,7 +7,7 @@ import { CartProduct } from "../CartProduct";
 
 export function Modal(){
   const {cardList} = useContext(CartContext)
-  const {showModal,setShowModal,resetCart} = useContext(CartContext)
+  const {showModal,setShowModal,resetCart, total} = useContext(CartContext)
 
   return(
     <>
@@ -29,7 +29,7 @@ export function Modal(){
           </ul>
           <div>
             <h3>Total</h3>
-            <span>R$ 0.00</span>
+            <span>R$ {total.toFixed(2)}</span>
           </div>
 
           <StyledButton onClick={() => resetCart()} buttonColor="green" buttonSize="large">Remover Todos</StyledButton>

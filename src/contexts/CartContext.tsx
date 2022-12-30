@@ -21,6 +21,7 @@ interface iCartProviderProps{
   filterCartItemById:(itemId: number)=> void;
   quantityUp:(itemId: number)=> void;
   quantityDown:(itemId: number)=> void;
+  total: number;
 }
 
 export interface iCartProducts {
@@ -43,6 +44,9 @@ export function CartProvider({children}:iProviderProps){
   const [ cardList,setCardList] = useState([] as iCartProducts[])
 
   const navigate = useNavigate();
+
+  const total = (cardList.map(element => element.price*element.quantity)).reduce(
+    (accumulator, currentValue) => accumulator + currentValue,0);
 
   function showProducts(text:string) {
     const result = (products.filter(product => {
@@ -170,7 +174,7 @@ export function CartProvider({children}:iProviderProps){
     }
   
   return(
-    <CartContext.Provider value={{search,setSearch, filteredProducts, searchText, showProducts, setSearchText,showModal,setShowModal,getItemById,cardList,setCardList,resetCart,filterCartItemById,quantityUp,quantityDown}}>
+    <CartContext.Provider value={{search,setSearch, filteredProducts, searchText, showProducts, setSearchText,showModal,setShowModal,getItemById,cardList,setCardList,resetCart,filterCartItemById,quantityUp,quantityDown,total}}>
       {children}
     </CartContext.Provider>
   )

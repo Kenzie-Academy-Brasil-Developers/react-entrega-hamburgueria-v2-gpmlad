@@ -60,6 +60,8 @@ export const StyledModalContentItems = styled.div`
     flex-direction: column;
     gap: 18px;
     padding-bottom: 18px;
+    max-height: 40vh;
+    overflow-y: scroll;
   }
 
   & > div {
