@@ -40,6 +40,10 @@ export const StyledHeader = styled.header`
     color: white;
     font-weight: var(--font-weight-bold);
   }
+
+  @media(min-width: 975px){
+    padding: 28px 7.5%;
+  }
 `
 
 export const StyledInput = styled.div`

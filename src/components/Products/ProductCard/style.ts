@@ -18,10 +18,13 @@ export const StyledProduct = styled.li`
   .image {
     background-color: var(--color-gray-100);
     width: 100%;
+    height: 150px;
   }
 
   img{
     width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .description{

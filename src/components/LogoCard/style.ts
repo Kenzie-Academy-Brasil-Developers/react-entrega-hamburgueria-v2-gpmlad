@@ -31,4 +31,17 @@ export const StyledContainer= styled.div`
       color: var(--color-gray-600);
     }
   }
+
+  & > img{
+    display: none;
+  }
+
+  @media(min-width: 975px){
+    width: 462px;
+
+    & > img{
+      display: unset;
+      width: 182px;
+    }
+  }
 `

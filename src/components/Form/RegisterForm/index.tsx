@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { iUserRegister, UserContext } from "../../../contexts/UserContext";
 import { StyledButton } from "../../Button/style";
 import { Input } from "../Input";
-import { StyledForm } from "../LoginForm/style";
 import { registerSchema } from "./registerSchema";
+import { StyledRegisterForm } from "./style";
 
 export function RegisterForm(){
 
@@ -23,7 +23,7 @@ export function RegisterForm(){
   }
 
   return(
-    <StyledForm>
+    <StyledRegisterForm>
     <div>
       <h2>Cadastro</h2>
       <Link to='/'>Retornar para o login</Link>
@@ -44,6 +44,6 @@ export function RegisterForm(){
 
       <StyledButton disabled={loading} type="submit" buttonColor={loading?'gray':"green"} buttonSize="large">{loading?'Cadastrando...':'Cadastrar'}</StyledButton>
     </form>
-    </StyledForm>
+    </StyledRegisterForm>
   )
 }

@@ -6,8 +6,8 @@ import { LogoCard } from "../../components/LogoCard";
 export function Login(){
   return(
     <>
-      <Container>
       <ToastContainer/>
+      <Container>
       <LogoCard/>
       <LoginForm/>
       </Container>
