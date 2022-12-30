@@ -18,7 +18,9 @@ interface iCartProviderProps{
   cardList: iCartProducts[];
   setCardList: React.Dispatch<React.SetStateAction<iCartProducts[]>>;
   resetCart: () => void;
-  filterCartItemById:(itemId: number)=> void
+  filterCartItemById:(itemId: number)=> void;
+  quantityUp:(itemId: number)=> void;
+  quantityDown:(itemId: number)=> void;
 }
 
 export interface iCartProducts {
@@ -56,12 +58,39 @@ export function CartProvider({children}:iProviderProps){
       return
       }
 
+    const preFilter = cardList.filter(element => element.id === productID)
+    
+    if(preFilter.length !== 0){
+      console.log('este elemento já existe no carrinho')
+      toast.error('Produto já adicionado ao carrinho!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+      return
+    }
+
     try {
       const result = await api.get<iProducts>(`/products/${productID}`, {headers:{
         Authorization: `Bearer ${JSON.parse(token)}`
       }})
       let obj:iCartProducts = {...result.data, quantity:1}
       setCardList([...cardList, obj])
+      toast.success('Produto adicionado ao carrinho com sucesso!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
       //adicionar toasty de produto adicionado ao carrinho
     } catch (error) {
       console.log(error)
@@ -111,8 +140,37 @@ export function CartProvider({children}:iProviderProps){
     setCardList(filtered)
   }
 
+  function quantityUp(itemId:number){
+
+    const filtered = cardList.map(element => 
+      {
+      if(element.id === itemId){
+        element.quantity++
+        return element
+      } else{
+        return element
+      }
+      }
+      )
+      setCardList(filtered)
+    }
+
+  function quantityDown(itemId:number){
+    const filtered = cardList.map(element => 
+      {
+      if(element.id === itemId){
+        element.quantity--
+        return element
+      } else{
+        return element
+      }
+      }
+      )
+      setCardList(filtered)
+    }
+  
   return(
-    <CartContext.Provider value={{search,setSearch, filteredProducts, searchText, showProducts, setSearchText,showModal,setShowModal,getItemById,cardList,setCardList,resetCart,filterCartItemById}}>
+    <CartContext.Provider value={{search,setSearch, filteredProducts, searchText, showProducts, setSearchText,showModal,setShowModal,getItemById,cardList,setCardList,resetCart,filterCartItemById,quantityUp,quantityDown}}>
       {children}
     </CartContext.Provider>
   )

@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 
 export function CartProduct({id,img,name,quantity}:iCartProducts){
-  const {filterCartItemById} = useContext(CartContext)
+  const {filterCartItemById,quantityUp, quantityDown} = useContext(CartContext)
   return(
     <StyledCartProduct>
               <div>
@@ -15,9 +15,9 @@ export function CartProduct({id,img,name,quantity}:iCartProducts){
                 <div>
                   <h2>{name}</h2>
                   <div>
-                    <button>{'<'}</button>
+                    <button onClick={()=> quantityDown(id)} disabled={quantity === 1?true:false}>{'<'}</button>
                     <p>{quantity}</p>
-                    <button>{'>'}</button>
+                    <button onClick={()=> quantityUp(id)} disabled={quantity === 10?true:false}>{'>'}</button>
                   </div>
                 </div>
               </div>
