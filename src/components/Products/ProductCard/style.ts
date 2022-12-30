@@ -11,17 +11,20 @@ export const StyledProduct = styled.li`
   gap: 16px;
 
   &:hover{
-    border: 2px solid var(--color-gray-600);
-    transition: 0.4s;
+    border: 2px solid var(--color-primary);
+    transition: 0.2s;
   }
 
   .image {
     background-color: var(--color-gray-100);
     width: 100%;
+    height: 150px;
   }
 
   img{
     width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .description{

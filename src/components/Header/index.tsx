@@ -9,10 +9,11 @@ import { CartContext } from '../../contexts/CartContext'
 import { StyledButton } from '../Button/style'
 
 export function Header(){
-  const {setSearch ,search, setSearchText,showProducts, searchText} = useContext(CartContext)
+  const {setSearch ,search, setSearchText,showProducts, searchText,setShowModal} = useContext(CartContext)
 
   const {userLogout} = useContext(UserContext)
-
+  const {cardList} = useContext(CartContext)
+  //vincular a div com a quatidade de itens no carrinho (state)
   return(
     <StyledHeader>
       <div>
@@ -23,8 +24,9 @@ export function Header(){
         <button onClick={() => setSearch(!search)}>
           <img src={searchIcon} alt="Procurar" />
         </button>
-        <button>
+        <button onClick={() => setShowModal(true)}>
           <img src={cart} alt="Carrinho" />
+          <div>{cardList.length}</div>
         </button>
         <button onClick={userLogout}>
           <img src={logout} alt="Sair" />

@@ -5,7 +5,7 @@ export const StyledProductList = styled.main`
 
   p {
     padding-top: 30px;
-    color: var(--color-gray-100);
+    color: var(--color-gray-300);
     padding-bottom: 26px;
   }
 
@@ -22,10 +22,12 @@ export const StyledProductList = styled.main`
     padding-bottom: 15px;
   }
 
-  @media(min-width: 1024px){
+  @media(min-width: 975px){
+    padding: 0 7.5%;
     ul{
       flex-wrap: wrap;
       overflow-y: scroll;
+      justify-content: center;
     }
   }
 `

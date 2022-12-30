@@ -6,8 +6,8 @@ import { LogoCard } from "../../components/LogoCard";
 export function Register(){
   return(
     <>
-    <Container>
     <ToastContainer/>
+    <Container>
     <LogoCard/>
     <RegisterForm/>
     </Container>

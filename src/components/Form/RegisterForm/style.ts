@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledForm = styled.div`
+export const StyledRegisterForm = styled.div`
   border: 2px solid var(--color-gray-0);
   border-radius: var(--radius-2);
   box-shadow: 0px 0px 30px -20px rgba(0, 0, 0, 0.25);
@@ -13,7 +13,7 @@ export const StyledForm = styled.div`
 
   gap: 19px;
 
-  grid-area: left;
+  grid-area: right;
 
   div{
     display: flex;
